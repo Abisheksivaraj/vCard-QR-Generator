@@ -12,9 +12,9 @@ import {
   Target,
   Users,
   Zap,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
-
-import logo from "../assets/logo.jpg"
 
 // Move FormInput outside the main component to prevent recreation
 const FormInput = React.memo(
@@ -29,9 +29,9 @@ const FormInput = React.memo(
     value,
     onChange,
   }) => (
-    <div className="mb-6">
-      <label className="flex items-center gap-2 mb-3 font-semibold text-gray-800 text-sm">
-        <Icon size={16} className="text-[#E95874]" />
+    <div className="mb-4 sm:mb-6">
+      <label className="flex items-center gap-2 mb-2 sm:mb-3 font-semibold text-gray-800 text-sm">
+        <Icon size={14} className="text-[#E95874] sm:w-4 sm:h-4" />
         {label} {required && <span className="text-[#E95874]">*</span>}
       </label>
       {rows ? (
@@ -40,7 +40,7 @@ const FormInput = React.memo(
           value={value || ""}
           onChange={(e) => onChange(field, e.target.value)}
           placeholder={placeholder}
-          className="w-full p-4 border-2 border-gray-200 rounded-xl text-base transition-all duration-300 bg-white focus:outline-none focus:border-[#39A3DD] focus:shadow-lg focus:shadow-[#39A3DD]/20 hover:border-[#E95874] resize-none"
+          className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg sm:rounded-xl text-sm sm:text-base transition-all duration-300 bg-white focus:outline-none focus:border-[#39A3DD] focus:shadow-lg focus:shadow-[#39A3DD]/20 hover:border-[#E95874] resize-none"
         />
       ) : (
         <input
@@ -49,7 +49,7 @@ const FormInput = React.memo(
           onChange={(e) => onChange(field, e.target.value)}
           placeholder={placeholder}
           required={required}
-          className="w-full p-4 border-2 border-gray-200 rounded-xl text-base transition-all duration-300 bg-white focus:outline-none focus:border-[#39A3DD] focus:shadow-lg focus:shadow-[#39A3DD]/20 hover:border-[#E95874]"
+          className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg sm:rounded-xl text-sm sm:text-base transition-all duration-300 bg-white focus:outline-none focus:border-[#39A3DD] focus:shadow-lg focus:shadow-[#39A3DD]/20 hover:border-[#E95874]"
         />
       )}
     </div>
@@ -71,6 +71,7 @@ const VCardQRGenerator = () => {
 
   const [qrCodeDataURL, setQrCodeDataURL] = useState("");
   const [vcardPreview, setVcardPreview] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
   const canvasRef = useRef(null);
 
   // Use useCallback to prevent function recreation on every render
@@ -196,67 +197,69 @@ const VCardQRGenerator = () => {
   }, [generateVCard]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#39A3DD] via-[#E95874] to-[#38474F] p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#39A3DD] via-[#E95874] to-[#acdcf7] p-3 sm:p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header with Archery Theme */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="flex">
-              {/* <div>
-                <img src={logo} alt="" className="h-[5rem] w-[5rem]"/>
-              </div> */}
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-                  ARCHERY TECHNOCRATS
-                </h1>
-                <p className="text-xl text-white/90 tracking-wider font-light">
-                  TARGET PERFECTION
-                </p>
-              </div>
+        {/* Header with Archery Theme - Fully Responsive */}
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
+          <div className="flex flex-col items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+            <div className="text-center">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-1 sm:mb-2 leading-tight px-4">
+                ARCHERY TECHNOCRATS
+              </h1>
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 tracking-wider font-light">
+                TARGET PERFECTION
+              </p>
             </div>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-2xl mx-auto">
-            <h2 className="text-2xl font-semibold text-white mb-2">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-2">
               vCard QR Generator
             </h2>
-            <p className="text-white/80">
+            <p className="text-xs sm:text-sm md:text-base text-white/80 px-2 sm:px-0">
               Create professional QR codes that automatically save your contact
               information
             </p>
           </div>
         </div>
 
-        <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 md:p-12">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Form Section */}
+        <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
+          <div className="grid xl:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+            {/* Form Section - Fully Responsive */}
             <div className="space-y-0">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="p-3 bg-gradient-to-r from-[#E95874] to-[#39A3DD] rounded-xl">
-                  <Users size={24} className="text-white" />
+              <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+                <div className="p-2 sm:p-3 bg-gradient-to-r from-[#E95874] to-[#39A3DD] rounded-lg sm:rounded-xl">
+                  <Users
+                    size={18}
+                    className="text-white sm:w-5 sm:h-5 md:w-6 md:h-6"
+                  />
                 </div>
-                <h2 className="text-2xl font-bold text-[#38474F]">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#38474F]">
                   Contact Information
                 </h2>
               </div>
 
-              <FormInput
-                icon={User}
-                label="First Name"
-                field="firstName"
-                placeholder="John"
-                required
-                value={formData.firstName}
-                onChange={handleInputChange}
-              />
-              <FormInput
-                icon={User}
-                label="Last Name"
-                field="lastName"
-                placeholder="Doe"
-                required
-                value={formData.lastName}
-                onChange={handleInputChange}
-              />
+              {/* Two column layout for names on tablets and larger screens */}
+              <div className="grid md:grid-cols-2 md:gap-4">
+                <FormInput
+                  icon={User}
+                  label="First Name"
+                  field="firstName"
+                  placeholder="John"
+                  required
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                />
+                <FormInput
+                  icon={User}
+                  label="Last Name"
+                  field="lastName"
+                  placeholder="Doe"
+                  required
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                />
+              </div>
+
               <FormInput
                 icon={Phone}
                 label="Mobile Number"
@@ -276,22 +279,27 @@ const VCardQRGenerator = () => {
                 value={formData.email}
                 onChange={handleInputChange}
               />
-              <FormInput
-                icon={Building}
-                label="Company/Organization"
-                field="company"
-                placeholder="Archery Technocrats"
-                value={formData.company}
-                onChange={handleInputChange}
-              />
-              <FormInput
-                icon={FileText}
-                label="Designation/Title"
-                field="title"
-                placeholder="Software Engineer"
-                value={formData.title}
-                onChange={handleInputChange}
-              />
+
+              {/* Two column layout for company and title on larger screens */}
+              <div className="grid lg:grid-cols-2 lg:gap-4">
+                <FormInput
+                  icon={Building}
+                  label="Company/Organization"
+                  field="company"
+                  placeholder="Archery Technocrats"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                />
+                <FormInput
+                  icon={FileText}
+                  label="Designation/Title"
+                  field="title"
+                  placeholder="Software Engineer"
+                  value={formData.title}
+                  onChange={handleInputChange}
+                />
+              </div>
+
               <FormInput
                 icon={Globe}
                 label="Website"
@@ -321,44 +329,53 @@ const VCardQRGenerator = () => {
               />
             </div>
 
-            {/* QR Code Section */}
-            <div className="flex flex-col items-center justify-start">
-              <div className="flex items-center gap-3 mb-8 w-full justify-center">
-                <div className="p-3 bg-gradient-to-r from-[#39A3DD] to-[#E95874] rounded-xl">
-                  <QrCode size={24} className="text-white" />
+            {/* QR Code Section - Responsive Layout */}
+            <div className="flex flex-col items-center justify-start mt-8 xl:mt-0">
+              <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 w-full justify-center">
+                <div className="p-2 sm:p-3 bg-gradient-to-r from-[#39A3DD] to-[#E95874] rounded-lg sm:rounded-xl">
+                  <QrCode
+                    size={18}
+                    className="text-white sm:w-5 sm:h-5 md:w-6 md:h-6"
+                  />
                 </div>
-                <h2 className="text-2xl font-bold text-[#38474F]">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#38474F]">
                   Your QR Code
                 </h2>
               </div>
 
-              <div className="bg-gradient-to-br from-[#E95874]/10 to-[#39A3DD]/10 rounded-2xl p-8 mb-6 w-full max-w-sm">
+              <div className="bg-gradient-to-br from-[#E95874]/10 to-[#39A3DD]/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 mb-6 w-full max-w-sm">
                 <button
                   onClick={generateQRCode}
-                  className="w-full bg-gradient-to-r from-[#E95874] to-[#39A3DD] text-white border-none px-8 py-4 rounded-xl text-lg font-semibold cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-[#E95874]/30 hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-3"
+                  className="w-full bg-gradient-to-r from-[#E95874] to-[#39A3DD] text-white border-none px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base lg:text-lg font-semibold cursor-pointer transition-all duration-300 hover:shadow-xl hover:shadow-[#E95874]/30 hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-3"
                 >
-                  <Zap size={20} />
+                  <Zap size={16} className="sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                   Generate QR Code
                 </button>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-6 flex justify-center">
                 <canvas
                   ref={canvasRef}
-                  className="bg-white p-6 rounded-2xl shadow-lg border-4 border-[#E95874]"
-                  style={{ display: qrCodeDataURL ? "block" : "none" }}
+                  className="bg-white p-3 sm:p-4 lg:p-6 rounded-xl sm:rounded-2xl shadow-lg border-2 sm:border-4 border-[#E95874] max-w-full"
+                  style={{
+                    display: qrCodeDataURL ? "block" : "none",
+                    width: "240px",
+                    height: "240px",
+                    maxWidth: "280px",
+                    maxHeight: "280px",
+                  }}
                 />
                 {!qrCodeDataURL && (
-                  <div className="w-80 h-80 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-300">
-                    <div className="text-center">
+                  <div className="w-60 h-60 sm:w-72 sm:h-72 lg:w-80 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl sm:rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-300">
+                    <div className="text-center p-4">
                       <QrCode
-                        size={48}
-                        className="text-gray-400 mx-auto mb-4"
+                        size={32}
+                        className="text-gray-400 mx-auto mb-4 sm:w-10 sm:h-10 lg:w-12 lg:h-12"
                       />
-                      <p className="text-gray-500 font-medium">
+                      <p className="text-gray-500 font-medium text-sm sm:text-base">
                         QR Code Preview
                       </p>
-                      <p className="text-sm text-gray-400 mt-2">
+                      <p className="text-xs sm:text-sm text-gray-400 mt-2">
                         Generate to see your QR code
                       </p>
                     </div>
@@ -369,84 +386,119 @@ const VCardQRGenerator = () => {
               {qrCodeDataURL && (
                 <button
                   onClick={downloadQR}
-                  className="bg-gradient-to-r from-[#38474F] to-[#39A3DD] text-white border-none px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex items-center gap-3"
+                  className="bg-gradient-to-r from-[#38474F] to-[#39A3DD] text-white border-none px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex items-center gap-3 text-sm sm:text-base"
                 >
-                  <Download size={18} />
+                  <Download size={14} className="sm:w-4 sm:h-4" />
                   Download QR Code
                 </button>
               )}
             </div>
           </div>
 
-          {/* vCard Preview */}
-          <div className="mt-12 bg-gradient-to-r from-gray-50 to-[#39A3DD]/5 rounded-2xl p-6 border border-[#39A3DD]/20">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-[#38474F] rounded-lg">
-                <FileText size={20} className="text-white" />
+          {/* vCard Preview - Collapsible on mobile, always visible on desktop */}
+          <div className="mt-8 sm:mt-10 lg:mt-12">
+            {/* Mobile Toggle Button */}
+            <button
+              onClick={() => setShowPreview(!showPreview)}
+              className="md:hidden w-full bg-gradient-to-r from-gray-50 to-[#39A3DD]/5 rounded-xl p-4 border border-[#39A3DD]/20 flex items-center justify-between mb-4 transition-all duration-300 hover:shadow-md"
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-[#38474F] rounded-lg">
+                  <FileText size={16} className="text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-[#38474F]">
+                  vCard Preview
+                </h3>
               </div>
-              <h3 className="text-xl font-bold text-[#38474F]">
-                vCard Preview
-              </h3>
-            </div>
-            <div className="bg-white border-2 border-[#39A3DD]/20 rounded-xl p-4 font-mono text-sm text-[#38474F] whitespace-pre-wrap max-h-48 overflow-y-auto">
-              {vcardPreview}
+              {showPreview ? (
+                <ChevronUp size={20} className="text-[#38474F]" />
+              ) : (
+                <ChevronDown size={20} className="text-[#38474F]" />
+              )}
+            </button>
+
+            {/* Preview Content */}
+            <div
+              className={`bg-gradient-to-r from-gray-50 to-[#39A3DD]/5 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-[#39A3DD]/20 transition-all duration-300 ${
+                showPreview ? "block" : "hidden md:block"
+              }`}
+            >
+              <div className="hidden md:flex items-center gap-3 mb-4">
+                <div className="p-2 bg-[#38474F] rounded-lg">
+                  <FileText size={20} className="text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-[#38474F]">
+                  vCard Preview
+                </h3>
+              </div>
+              <div className="bg-white border-2 border-[#39A3DD]/20 rounded-lg sm:rounded-xl p-3 sm:p-4 font-mono text-xs sm:text-sm text-[#38474F] whitespace-pre-wrap max-h-48 sm:max-h-60 lg:max-h-72 overflow-y-auto">
+                {vcardPreview}
+              </div>
             </div>
           </div>
 
-          {/* Enhanced Instructions */}
-          <div className="mt-8 bg-gradient-to-r from-[#E95874]/10 to-[#39A3DD]/10 rounded-2xl p-8 border border-[#E95874]/20">
-            <div className="flex items-center gap-3 mb-6">
-              <Target size={24} className="text-[#E95874]" />
-              <h3 className="text-xl font-bold text-[#38474F]">
+          {/* Enhanced Instructions - Fully Responsive Grid */}
+          <div className="mt-6 sm:mt-8 lg:mt-10 bg-gradient-to-r from-[#E95874]/10 to-[#39A3DD]/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 border border-[#E95874]/20">
+            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <Target
+                size={18}
+                className="text-[#E95874] sm:w-5 sm:h-5 lg:w-6 lg:h-6"
+              />
+              <h3 className="text-lg sm:text-xl font-bold text-[#38474F]">
                 Hit Your Networking Targets
               </h3>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white/60 rounded-xl p-4 border border-[#39A3DD]/20">
-                <h4 className="font-semibold text-[#38474F] mb-2 flex items-center gap-2">
-                  <Building size={16} className="text-[#E95874]" />
+            {/* Responsive Grid - 1 column on mobile, 2 on tablet, 4 on desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+              <div className="bg-white/60 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#39A3DD]/20 transition-all duration-300 hover:shadow-md hover:bg-white/80">
+                <h4 className="font-semibold text-[#38474F] mb-2 flex items-center gap-2 text-sm sm:text-base">
+                  <Building
+                    size={14}
+                    className="text-[#E95874] sm:w-4 sm:h-4"
+                  />
                   Business Cards
                 </h4>
-                <p className="text-sm text-gray-700">
+                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
                   Print the QR code on your business cards for instant contact
                   sharing
                 </p>
               </div>
 
-              <div className="bg-white/60 rounded-xl p-4 border border-[#39A3DD]/20">
-                <h4 className="font-semibold text-[#38474F] mb-2 flex items-center gap-2">
-                  <Mail size={16} className="text-[#E95874]" />
+              <div className="bg-white/60 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#39A3DD]/20 transition-all duration-300 hover:shadow-md hover:bg-white/80">
+                <h4 className="font-semibold text-[#38474F] mb-2 flex items-center gap-2 text-sm sm:text-base">
+                  <Mail size={14} className="text-[#E95874] sm:w-4 sm:h-4" />
                   Email Signatures
                 </h4>
-                <p className="text-sm text-gray-700">
+                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
                   Add the QR code image to your email signature
                 </p>
               </div>
 
-              <div className="bg-white/60 rounded-xl p-4 border border-[#39A3DD]/20">
-                <h4 className="font-semibold text-[#38474F] mb-2 flex items-center gap-2">
-                  <Globe size={16} className="text-[#E95874]" />
+              <div className="bg-white/60 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#39A3DD]/20 transition-all duration-300 hover:shadow-md hover:bg-white/80">
+                <h4 className="font-semibold text-[#38474F] mb-2 flex items-center gap-2 text-sm sm:text-base">
+                  <Globe size={14} className="text-[#E95874] sm:w-4 sm:h-4" />
                   Social Media
                 </h4>
-                <p className="text-sm text-gray-700">
+                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
                   Share the QR code in your social media profiles
                 </p>
               </div>
 
-              <div className="bg-white/60 rounded-xl p-4 border border-[#39A3DD]/20">
-                <h4 className="font-semibold text-[#38474F] mb-2 flex items-center gap-2">
-                  <Users size={16} className="text-[#E95874]" />
+              <div className="bg-white/60 rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#39A3DD]/20 transition-all duration-300 hover:shadow-md hover:bg-white/80">
+                <h4 className="font-semibold text-[#38474F] mb-2 flex items-center gap-2 text-sm sm:text-base">
+                  <Users size={14} className="text-[#E95874] sm:w-4 sm:h-4" />
                   Networking
                 </h4>
-                <p className="text-sm text-gray-700">
+                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
                   Display on your phone screen for quick sharing at events
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 bg-white/80 rounded-xl p-4 border-l-4 border-[#E95874]">
-              <p className="text-sm text-[#38474F]">
+            {/* Pro Tip Section */}
+            <div className="mt-4 sm:mt-6 bg-white/80 rounded-lg sm:rounded-xl p-3 sm:p-4 border-l-4 border-[#E95874] transition-all duration-300 hover:shadow-md">
+              <p className="text-xs sm:text-sm text-[#38474F] leading-relaxed">
                 <strong className="text-[#E95874]">Perfect Targeting:</strong>{" "}
                 When someone scans your QR code, their phone will automatically
                 recognize it as contact information and prompt them to save it
@@ -456,10 +508,16 @@ const VCardQRGenerator = () => {
             </div>
           </div>
         </div>
+
+        {/* Footer - Optional for mobile */}
+        <div className="mt-6 sm:mt-8 text-center">
+          <p className="text-xs sm:text-sm text-white/70">
+            © 2024 Archery Technocrats - Targeting Excellence in Every Solution
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
 export default VCardQRGenerator;
-          
